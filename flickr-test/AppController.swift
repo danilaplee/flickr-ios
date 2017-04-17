@@ -12,6 +12,7 @@ class AppController {
     
     var view:ViewController?
     var api:ApiService?
+    var history:[String] = [];
     
     init(v:ViewController)
     {

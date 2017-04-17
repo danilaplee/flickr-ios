@@ -14,4 +14,13 @@ class ApiService {
     init(a:AppController) {
         app = a;
     }
+    
+    func httpCall() {
+        
+    }
+    
+    func searchFullText(s:String) {
+        print("searching for "+s)
+        
+    }
 }
