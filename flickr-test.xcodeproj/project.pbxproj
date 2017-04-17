@@ -17,6 +17,9 @@
 		86E9D3341EA501B400858ED2 /* flickr_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3331EA501B400858ED2 /* flickr_testUITests.swift */; };
 		86E9D3441EA5053A00858ED2 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3431EA5053A00858ED2 /* ApiService.swift */; };
 		86E9D3461EA505B400858ED2 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3451EA505B400858ED2 /* AppController.swift */; };
+		86E9D34A1EA5432B00858ED2 /* NavComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3491EA5432B00858ED2 /* NavComponent.swift */; };
+		86E9D34C1EA547B900858ED2 /* CollectionComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D34B1EA547B900858ED2 /* CollectionComponent.swift */; };
+		86E9D3501EA5497F00858ED2 /* SingleItemViewComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D34F1EA5497F00858ED2 /* SingleItemViewComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		86E9D3351EA501B400858ED2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		86E9D3431EA5053A00858ED2 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		86E9D3451EA505B400858ED2 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		86E9D3491EA5432B00858ED2 /* NavComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavComponent.swift; sourceTree = "<group>"; };
+		86E9D34B1EA547B900858ED2 /* CollectionComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionComponent.swift; sourceTree = "<group>"; };
+		86E9D34F1EA5497F00858ED2 /* SingleItemViewComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleItemViewComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,8 @@
 		86E9D30F1EA501B400858ED2 /* flickr-test */ = {
 			isa = PBXGroup;
 			children = (
+				86E9D34E1EA5484300858ED2 /* Services */,
+				86E9D34D1EA5483600858ED2 /* Components */,
 				86E9D3101EA501B400858ED2 /* AppDelegate.swift */,
 				86E9D3451EA505B400858ED2 /* AppController.swift */,
 				86E9D3121EA501B400858ED2 /* ViewController.swift */,
@@ -111,7 +119,6 @@
 				86E9D31C1EA501B400858ED2 /* LaunchScreen.storyboard */,
 				86E9D31F1EA501B400858ED2 /* Info.plist */,
 				86E9D3171EA501B400858ED2 /* flickr_test.xcdatamodeld */,
-				86E9D3431EA5053A00858ED2 /* ApiService.swift */,
 			);
 			path = "flickr-test";
 			sourceTree = "<group>";
@@ -132,6 +139,24 @@
 				86E9D3351EA501B400858ED2 /* Info.plist */,
 			);
 			path = "flickr-testUITests";
+			sourceTree = "<group>";
+		};
+		86E9D34D1EA5483600858ED2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				86E9D3491EA5432B00858ED2 /* NavComponent.swift */,
+				86E9D34F1EA5497F00858ED2 /* SingleItemViewComponent.swift */,
+				86E9D34B1EA547B900858ED2 /* CollectionComponent.swift */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		86E9D34E1EA5484300858ED2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				86E9D3431EA5053A00858ED2 /* ApiService.swift */,
+			);
+			name = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,10 +297,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				86E9D3131EA501B400858ED2 /* ViewController.swift in Sources */,
+				86E9D34C1EA547B900858ED2 /* CollectionComponent.swift in Sources */,
 				86E9D3461EA505B400858ED2 /* AppController.swift in Sources */,
 				86E9D3441EA5053A00858ED2 /* ApiService.swift in Sources */,
+				86E9D34A1EA5432B00858ED2 /* NavComponent.swift in Sources */,
 				86E9D3191EA501B400858ED2 /* flickr_test.xcdatamodeld in Sources */,
 				86E9D3111EA501B400858ED2 /* AppDelegate.swift in Sources */,
+				86E9D3501EA5497F00858ED2 /* SingleItemViewComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

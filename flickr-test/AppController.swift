@@ -11,10 +11,12 @@ import Foundation
 class AppController {
     
     var view:ViewController?
+    var api:ApiService?
     
     init(v:ViewController)
     {
         view = v;
+        api = ApiService(a:self);
     }
     
 }
