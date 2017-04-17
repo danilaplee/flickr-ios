@@ -15,6 +15,8 @@
 		86E9D31E1EA501B400858ED2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86E9D31C1EA501B400858ED2 /* LaunchScreen.storyboard */; };
 		86E9D3291EA501B400858ED2 /* flickr_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3281EA501B400858ED2 /* flickr_testTests.swift */; };
 		86E9D3341EA501B400858ED2 /* flickr_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3331EA501B400858ED2 /* flickr_testUITests.swift */; };
+		86E9D3441EA5053A00858ED2 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3431EA5053A00858ED2 /* ApiService.swift */; };
+		86E9D3461EA505B400858ED2 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3451EA505B400858ED2 /* AppController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		86E9D32F1EA501B400858ED2 /* flickr-testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flickr-testUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		86E9D3331EA501B400858ED2 /* flickr_testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = flickr_testUITests.swift; sourceTree = "<group>"; };
 		86E9D3351EA501B400858ED2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		86E9D3431EA5053A00858ED2 /* ApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		86E9D3451EA505B400858ED2 /* AppController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +104,14 @@
 			isa = PBXGroup;
 			children = (
 				86E9D3101EA501B400858ED2 /* AppDelegate.swift */,
+				86E9D3451EA505B400858ED2 /* AppController.swift */,
 				86E9D3121EA501B400858ED2 /* ViewController.swift */,
 				86E9D3141EA501B400858ED2 /* Main.storyboard */,
 				86E9D31A1EA501B400858ED2 /* Assets.xcassets */,
 				86E9D31C1EA501B400858ED2 /* LaunchScreen.storyboard */,
 				86E9D31F1EA501B400858ED2 /* Info.plist */,
 				86E9D3171EA501B400858ED2 /* flickr_test.xcdatamodeld */,
+				86E9D3431EA5053A00858ED2 /* ApiService.swift */,
 			);
 			path = "flickr-test";
 			sourceTree = "<group>";
@@ -266,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				86E9D3131EA501B400858ED2 /* ViewController.swift in Sources */,
+				86E9D3461EA505B400858ED2 /* AppController.swift in Sources */,
+				86E9D3441EA5053A00858ED2 /* ApiService.swift in Sources */,
 				86E9D3191EA501B400858ED2 /* flickr_test.xcdatamodeld in Sources */,
 				86E9D3111EA501B400858ED2 /* AppDelegate.swift in Sources */,
 			);

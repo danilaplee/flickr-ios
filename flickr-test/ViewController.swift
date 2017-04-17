@@ -9,9 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    var appCntrl:AppController?
+    
+    func createNavBar()
+    {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        appCntrl = AppController(v:self)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
