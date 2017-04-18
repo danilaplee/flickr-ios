@@ -112,28 +112,31 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     
     func startSearch(){
         let text = search!.text!
-        if(text == "") { app?.hideCollectionView() }
         if(text == "" || prev_search == text) { return }
         prev_search = text;
         app!.api!.searchFullText(text, 1)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        DispatchQueue.main.async(execute: {
-            self.release_service?.invalidate()
-        });
+        dismissKeyboard()
         startSearch()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dismissKeyboard()
         startSearch()
+    }
+    func dismissKeyboard() {
+        DispatchQueue.main.async(execute: {
+            self.view.endEditing(true)
+        })
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        DispatchQueue.main.async(execute: {
-            self.release_service?.invalidate()
-            self.release_service = Timer.scheduledTimer(timeInterval: self.release_timer, target: self, selector:#selector(self.startSearch), userInfo: nil, repeats: true)
-        });
+//        DispatchQueue.main.async(execute: {
+//            self.release_service?.invalidate()
+//            self.release_service = Timer.scheduledTimer(timeInterval: self.release_timer, target: self, selector:#selector(self.startSearch), userInfo: nil, repeats: true)
+//        });
     }
     
     //END SEARCH

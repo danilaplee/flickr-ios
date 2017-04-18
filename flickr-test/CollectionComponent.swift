@@ -23,6 +23,10 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     
     var nav_height = 0;
     var images:[[String:Any]] = []
+    var imageCache:[String:Any] = [:]
+    var total_loaded = 0;
+    var total_displayed = 0;
+    var prev_query = ""
     
     
     init(v:UIViewController, a:AppController){
@@ -31,8 +35,9 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         nav_height = a.nav_height;
         
         super.init(nibName: nil, bundle: nil)
-        
-        view.frame = CGRect(x:0,y:nav_height-20,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height)
+        view.frame = CGRect(x:0,y:nav_height-29,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height)
+        loader = LoaderComponent(v:self, a:a)
+        view.addSubview(loader!.view)
         initCollectionView()
         print("INITIALIAZED SINGLE VIEW CONTROLLER")
     }
@@ -40,13 +45,17 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     func initCollectionView(){
         let layout = UICollectionViewFlowLayout()
         collectionView?.removeFromSuperview()
+        total_loaded = 0;
+        total_displayed = 0;
         collectionView = nil
         collectionView = UICollectionView(frame:view.frame, collectionViewLayout: layout);
         collectionView!.register(ImagePreview.self, forCellWithReuseIdentifier: "imgCell")
         collectionView!.backgroundColor = UIColor.clear
         collectionView!.delegate = self
         collectionView!.dataSource = self
+        view.isHidden = false;
         view.addSubview(collectionView!)
+        view.bringSubview(toFront: loader!.view)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,6 +71,12 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    func showLoader(_ query:String){
+        if(prev_query != query) { imageCache = [:] }
+        prev_query = query;
+        loader?.setText("Loading "+query+"... ")
+        loader?.show()
+    }
     
     func displayCollection(_ data:[[String:Any]]){
         images = data;
@@ -74,16 +89,32 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         return images.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let url = images[indexPath.row]["url"]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imgCell", for: indexPath) as! ImagePreview
-            cell.awakeFromNib()
+        cell.awakeFromNib()
+        cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
+            self.view.isHidden = false;
+            self.total_loaded += 1;
+            if(response == "false" && response == "true"){
+                return;
+            }
+            if(self.imageCache[response.md5()] == nil)
+            {
+                self.imageCache[response.md5()] = UIImage(contentsOfFile: response)
+            }
+            cell.imageView?.image = self.imageCache[response.md5()] as! UIImage
+            if(self.loader!.view.isHidden == false && self.total_loaded == self.total_displayed) {
+                DispatchQueue.main.async(execute: {
+                    print("hiding preloader")
+                    self.loader?.hide()
+                    self.collectionView?.reloadData()
+                });
+            }
+        })
+        total_displayed += 1;
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let url = images[indexPath.row]["url"]
-        let img = (cell as! ImagePreview)
-        img.imageView?.imageFromUrl(url as! String, onload: { (response) in
-            self.view.isHidden = false;
-        })
     }
     
 }

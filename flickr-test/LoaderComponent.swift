@@ -33,17 +33,32 @@ class LoaderComponent: UIViewController {
         h1_frame_center!.y = h1_frame_center!.y + minimal_sqr.height*2
     }
     
+    func setText(_ text:String){
+        welcome_text?.text = text;
+        welcome_text?.isHidden = false;
+        
+    }
+    func show(){
+        loader?.isHidden = false;
+        view.isHidden = false;
+    }
+    func hide(){
+        loader?.isHidden = true;
+        welcome_text?.isHidden = true;
+        view.isHidden = true;
+    }
+    
     init(v:UIViewController, a:AppController){
         mainView = v;
         app = a;
         super.init(nibName: nil, bundle: nil)
+        screen_bounds = UIScreen.main.bounds
+        calcViewFrames()
         
         loader = UIActivityIndicatorView(frame: minimal_sqr)
         loader?.center = view.center
-        loader?.isHidden = false;
         loader?.activityIndicatorViewStyle = .gray
         loader?.startAnimating();
-        
         welcome_text =  UILabel(frame: h1_frame!)
         welcome_text!.center = h1_frame_center!;
         welcome_text!.text = app!.welcome_text
@@ -53,6 +68,7 @@ class LoaderComponent: UIViewController {
         //INJECTING VIEWS
         view.addSubview(loader!)
         view.addSubview(welcome_text!)
+        loader?.isHidden = true;
         
         print("INITIALIAZED LOADER COMPONENT")
     }

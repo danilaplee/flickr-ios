@@ -44,17 +44,15 @@ class AppController {
             print("INIT CACHE DIR ERROR")
             print(error)
         }
-
+    }
+    func displayLoading(){
+        view!.col!.showLoader(api!.current_query)
     }
     
     func displaySearchResult(_ result:[[String:Any]])
     {
         print("===== displaying search result =====")
         view!.col!.displayCollection(result)
-    }
-    
-    func hideCollectionView(){
-        view!.col!.view.isHidden = true;
     }
     
     func clearImageCache(){

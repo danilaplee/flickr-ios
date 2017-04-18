@@ -11,6 +11,7 @@ import CryptoSwift
 
 class ApiService {
     var app:AppController?
+    var current_query = "";
     
     //FLICKR PARAMS
     var flickr_auth_token           = "";
@@ -107,7 +108,8 @@ class ApiService {
     
     func searchFullText(_ string:String, _ page:Int) {
         print("searching for "+string)
-        app!.hideCollectionView();
+        current_query = string;
+        app!.displayLoading()
         let flickr_data = searchFlickr(string: string, page: page)
         let google_data = searchGoogle(string: string, page: page)
         let data = flickr_data + google_data

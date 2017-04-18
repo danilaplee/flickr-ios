@@ -38,6 +38,7 @@ extension UIImageView
 {
     public typealias CompletionHandler = (_ success:String) -> Void
     
+    
     public func imageFromUrl(_ urlString: String, onload:@escaping CompletionHandler)
     {
         do {
@@ -48,8 +49,10 @@ extension UIImageView
             let fileString  = imageDir.appendingPathComponent(fileName)
             if(fileManager.fileExists(atPath: fileString.path))
             {
-                self.image = UIImage(contentsOfFile: fileString.path)
-                onload("true")
+//                print("from cache")
+//                print(fileString.path)
+//                self.image = 
+                onload(fileString.path)
                 return;
             }
             URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
@@ -59,16 +62,19 @@ extension UIImageView
                         try fileManager.removeItem(atPath: fileString.path)
                     }
                     try fileManager.createFile(atPath: fileString.path, contents: data as! Data, attributes: [:])
-                    self.image = UIImage(contentsOfFile: fileString.path)
-                    onload("true")
+//                    print("from cache")
+//                    print(fileString.path)
+                    onload(fileString.path)
                 }
                 catch(let error){
                     print(error)
+                    onload("false")
                 }
             }.resume()
         }
         catch(let error){
             print(error)
+            onload("false")
         }
     }
 }

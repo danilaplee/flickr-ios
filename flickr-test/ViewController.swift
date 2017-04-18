@@ -38,6 +38,7 @@ class ViewController: UIViewController {
         //INITIALIZE PRELOADER FOR APP TRANSITIONS
         view.addSubview(nav!.view)
         view.addSubview(col!.view)
+        view.bringSubview(toFront: nav!.view)
     }
 
     override func didReceiveMemoryWarning() {
