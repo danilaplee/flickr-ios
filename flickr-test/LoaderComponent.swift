@@ -11,7 +11,8 @@ import UIKit
 
 class LoaderComponent: UIViewController {
     
-    var mainView:UIViewController;
+    var app:AppController?
+    var mainView:UIViewController?
     
     //BUILDING MAIN VIEW ITEMS
     var loader:UIActivityIndicatorView?
@@ -25,9 +26,34 @@ class LoaderComponent: UIViewController {
     var h1_frame_center:CGPoint?;
     let minimal_sqr = CGRect(x:0,y:0,width:20, height:20);
     
-    init(v:UIViewController){
+    func calcViewFrames(){
+        let h1_padding = 40;
+        h1_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:30)
+        h1_frame_center = view.center;
+        h1_frame_center!.y = h1_frame_center!.y + minimal_sqr.height*2
+    }
+    
+    init(v:UIViewController, a:AppController){
         mainView = v;
+        app = a;
         super.init(nibName: nil, bundle: nil)
+        
+        loader = UIActivityIndicatorView(frame: minimal_sqr)
+        loader?.center = view.center
+        loader?.isHidden = false;
+        loader?.activityIndicatorViewStyle = .gray
+        loader?.startAnimating();
+        
+        welcome_text =  UILabel(frame: h1_frame!)
+        welcome_text!.center = h1_frame_center!;
+        welcome_text!.text = app!.welcome_text
+        welcome_text!.isHidden = false;
+        welcome_text!.textAlignment = .center
+        
+        //INJECTING VIEWS
+        view.addSubview(loader!)
+        view.addSubview(welcome_text!)
+        
         print("INITIALIAZED LOADER COMPONENT")
     }
     

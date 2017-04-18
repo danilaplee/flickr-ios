@@ -15,9 +15,11 @@ class ViewController: UIViewController {
     var nav:NavComponent?
     var col:CollectionComponent?
     var singleView:SingleItemViewComponent?
-    var loader:LoaderComponent?
+    
+    var screen_bounds:CGRect?
     
     func calcViewFrames(){
+        
     }
     
     override func viewDidLoad() {
@@ -34,21 +36,6 @@ class ViewController: UIViewController {
         calcViewFrames()
         
         //INITIALIZE PRELOADER FOR APP TRANSITIONS
-        loader = UIActivityIndicatorView(frame: minimal_sqr)
-        loader?.center = view.center
-        loader?.isHidden = false;
-        loader?.activityIndicatorViewStyle = .gray
-        loader?.startAnimating();
-        
-        welcome_text =  UILabel(frame: h1_frame!)
-        welcome_text!.center = h1_frame_center!;
-        welcome_text!.text = app!.welcome_text
-        welcome_text!.isHidden = false;
-        welcome_text!.textAlignment = .center
-        
-        //INJECTING VIEWS
-        view.addSubview(loader!)
-        view.addSubview(welcome_text!)
         view.addSubview(nav!.view)
         view.addSubview(col!.view)
     }

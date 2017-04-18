@@ -41,7 +41,6 @@ extension UIImageView
     public func imageFromUrl(_ urlString: String, onload:@escaping CompletionHandler)
     {
         do {
-
             let fileManager = FileManager.default
             let documents = try! fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
             let fileName    = urlString.md5()+".jpeg"
