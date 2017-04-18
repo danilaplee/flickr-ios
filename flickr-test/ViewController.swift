@@ -15,25 +15,9 @@ class ViewController: UIViewController {
     var nav:NavComponent?
     var col:CollectionComponent?
     var singleView:SingleItemViewComponent?
-    
-    //BUILDING MAIN VIEW ITEMS
-    var loader:UIActivityIndicatorView?
-    var welcome_text:UILabel?
-    
-    //GENERAL PARAMS
-    var screen_bounds:CGRect?
-    
-    //VIEW FRAMES
-    var h1_frame:CGRect?;
-    var h1_frame_center:CGPoint?;
-    let minimal_sqr = CGRect(x:0,y:0,width:20, height:20);
+    var loader:LoaderComponent?
     
     func calcViewFrames(){
-        //INITIALIZE WELCOME TEXT
-        let h1_padding = 40;
-        h1_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:30)
-        h1_frame_center = view.center;
-        h1_frame_center!.y = h1_frame_center!.y + minimal_sqr.height*2
     }
     
     override func viewDidLoad() {
@@ -58,7 +42,7 @@ class ViewController: UIViewController {
         
         welcome_text =  UILabel(frame: h1_frame!)
         welcome_text!.center = h1_frame_center!;
-        welcome_text!.text = "WELCOME TO IMAGE SEARCH"
+        welcome_text!.text = app!.welcome_text
         welcome_text!.isHidden = false;
         welcome_text!.textAlignment = .center
         
@@ -66,7 +50,7 @@ class ViewController: UIViewController {
         view.addSubview(loader!)
         view.addSubview(welcome_text!)
         view.addSubview(nav!.view)
-//        view.addSubview(col!.view)
+        view.addSubview(col!.view)
     }
 
     override func didReceiveMemoryWarning() {

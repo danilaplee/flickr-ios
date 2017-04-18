@@ -22,7 +22,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     var back_title:UITextView?
     
     // CONSTANTS
-    let frame_height = 65;
+    var frame_height = 65;
     let release_timer = 3.0;
     let default_search_text = "Try Cats"
     let background_color = UIColor(red: 198, green: 198, blue: 203)
@@ -70,6 +70,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
         //DEPENDENCY INJECTION
         app = a;
         mainView = v
+        frame_height = a.nav_height;
         
         //INITIALIZE GENERAL PARAMS
         screen_bounds = UIScreen.main.bounds
@@ -111,9 +112,10 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     
     func startSearch(){
         let text = search!.text!
+        if(text == "") { app?.hideCollectionView() }
         if(text == "" || prev_search == text) { return }
         prev_search = text;
-        app!.api!.searchFullText(s: text)
+        app!.api!.searchFullText(text, 1)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {

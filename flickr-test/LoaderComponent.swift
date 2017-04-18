@@ -9,16 +9,26 @@
 import Foundation
 import UIKit
 
-class SingleItemViewComponent: UIViewController {
+class LoaderComponent: UIViewController {
     
-    var app:AppController;
     var mainView:UIViewController;
     
-    init(v:UIViewController, a:AppController){
-        app = a;
+    //BUILDING MAIN VIEW ITEMS
+    var loader:UIActivityIndicatorView?
+    var welcome_text:UILabel?
+    
+    //GENERAL PARAMS
+    var screen_bounds:CGRect?
+    
+    //VIEW FRAMES
+    var h1_frame:CGRect?;
+    var h1_frame_center:CGPoint?;
+    let minimal_sqr = CGRect(x:0,y:0,width:20, height:20);
+    
+    init(v:UIViewController){
         mainView = v;
         super.init(nibName: nil, bundle: nil)
-        print("INITIALIAZED SINGLE VIEW CONTROLLER")
+        print("INITIALIAZED LOADER COMPONENT")
     }
     
     required init?(coder aDecoder: NSCoder) {
