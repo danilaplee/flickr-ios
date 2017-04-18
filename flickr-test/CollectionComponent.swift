@@ -95,14 +95,14 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
             self.view.isHidden = false;
             self.total_loaded += 1;
-            if(response == "false" && response == "true"){
-                return;
-            }
-            if(self.imageCache[response.md5()] == nil)
-            {
-                self.imageCache[response.md5()] = UIImage(contentsOfFile: response)
-            }
-            cell.imageView?.image = self.imageCache[response.md5()] as! UIImage
+            if(response == "false" || response == "true"){ return; }
+            
+            let key = response.md5()
+            
+            if(self.imageCache[key] == nil) { self.imageCache[key] = UIImage(contentsOfFile: response) }
+            
+            cell.imageView?.image = self.imageCache[key] as! UIImage
+            
             if(self.loader!.view.isHidden == false && self.total_loaded == self.total_displayed) {
                 DispatchQueue.main.async(execute: {
                     print("hiding preloader")
