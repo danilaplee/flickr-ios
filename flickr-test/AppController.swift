@@ -12,9 +12,11 @@ class AppController {
     
     var view:ViewController?
     var api:ApiService?
+    var cache:CacheService?
     var history:[String] = [];
-    var search_result:[[String:Any]] = []
+    var search_cache:[[String:Any]] = []
     var fileManager:FileManager?
+    var current_page = 0;
     
     //CONSTANTS
     let nav_height = 65;
@@ -24,27 +26,26 @@ class AppController {
     {
         view        = v;
         api         = ApiService(a:self);
+        cache       = CacheService(a:self);
         fileManager = FileManager.default
         initCacheDirectory()
     }
     
     func initCacheDirectory() {
-        
-        do {
-            let documents   = try fileManager!.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let imageDir    = documents.appendingPathComponent("images", isDirectory: true)
-            if(fileManager!.fileExists(atPath: imageDir.path))
-            {
-                clearImageCache()
-                return;
-            }
-            try fileManager!.createDirectory(atPath: imageDir.path, withIntermediateDirectories: false, attributes: [:])
-        }
-        catch(let error){
-            print("INIT CACHE DIR ERROR")
-            print(error)
-        }
+        cache?.initCacheDirectory()
     }
+    
+    func searchFullText(_ string:String)
+    {
+        api?.searchFullText(string, current_page, done: { (data) in
+            if(self.current_page == 1) {
+                self.search_cache = data
+            }
+            else { self.search_cache += data }
+            self.displaySearchResult(self.search_cache)
+        })
+    }
+    
     func displayLoading(){
         view!.col!.showLoader(api!.current_query)
     }
@@ -56,17 +57,7 @@ class AppController {
     }
     
     func clearImageCache(){
-        do {
-            let documents   = try fileManager!.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let imageDir    = documents.appendingPathComponent("images", isDirectory: true)
-            try fileManager?.removeItem(at: imageDir)
-            try fileManager!.createDirectory(atPath: imageDir.path, withIntermediateDirectories: false, attributes: [:])
-        }
-        catch(let error){
-            print("CACHE CLEARING ERROR")
-            print(error)
-        }
-        
+        cache?.clearImageCache()
     }
     
 }

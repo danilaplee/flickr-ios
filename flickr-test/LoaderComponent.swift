@@ -24,6 +24,7 @@ class LoaderComponent: UIViewController {
     //VIEW FRAMES
     var h1_frame:CGRect?;
     var h1_frame_center:CGPoint?;
+    var main_frame:CGRect?
     let minimal_sqr = CGRect(x:0,y:0,width:20, height:20);
     
     func calcViewFrames(){
@@ -31,6 +32,7 @@ class LoaderComponent: UIViewController {
         h1_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:30)
         h1_frame_center = view.center;
         h1_frame_center!.y = h1_frame_center!.y + minimal_sqr.height*2
+        main_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:100)
     }
     
     func setText(_ text:String){
@@ -40,12 +42,12 @@ class LoaderComponent: UIViewController {
     }
     func show(){
         loader?.isHidden = false;
-        view.isHidden = false;
+//        view.isHidden = false;
     }
     func hide(){
         loader?.isHidden = true;
         welcome_text?.isHidden = true;
-        view.isHidden = true;
+//        view.isHidden = true;
     }
     
     init(v:UIViewController, a:AppController){
@@ -54,7 +56,8 @@ class LoaderComponent: UIViewController {
         super.init(nibName: nil, bundle: nil)
         screen_bounds = UIScreen.main.bounds
         calcViewFrames()
-        
+//        view.frame = main_frame!;
+//        view.center = h1_frame_center!
         loader = UIActivityIndicatorView(frame: minimal_sqr)
         loader?.center = view.center
         loader?.activityIndicatorViewStyle = .gray
@@ -66,6 +69,11 @@ class LoaderComponent: UIViewController {
         welcome_text!.textAlignment = .center
         
         //INJECTING VIEWS
+        let component_view = v.view!
+        view.removeFromSuperview()
+        view = nil;
+        view = PassThroughView(frame:component_view.frame);
+        view.center = component_view.center
         view.addSubview(loader!)
         view.addSubview(welcome_text!)
         loader?.isHidden = true;
@@ -86,5 +94,16 @@ class LoaderComponent: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+}
+class PassThroughView: UIView {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
     }
 }

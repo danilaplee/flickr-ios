@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8645F38A1EA5B8EB0087B25A /* LoaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8645F3891EA5B8EB0087B25A /* LoaderComponent.swift */; };
+		866EC44C1EA6967B00C12555 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866EC44B1EA6967B00C12555 /* CacheService.swift */; };
 		86E9D3111EA501B400858ED2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3101EA501B400858ED2 /* AppDelegate.swift */; };
 		86E9D3131EA501B400858ED2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3121EA501B400858ED2 /* ViewController.swift */; };
 		86E9D3161EA501B400858ED2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86E9D3141EA501B400858ED2 /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		8645F3851EA57C2D0087B25A /* flickr-testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flickr-testTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8645F3861EA57C2D0087B25A /* flickr-testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flickr-testUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8645F3891EA5B8EB0087B25A /* LoaderComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderComponent.swift; sourceTree = "<group>"; };
+		866EC44B1EA6967B00C12555 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		86E9D3101EA501B400858ED2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86E9D3121EA501B400858ED2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		86E9D3151EA501B400858ED2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				86E9D3431EA5053A00858ED2 /* ApiService.swift */,
+				866EC44B1EA6967B00C12555 /* CacheService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				86E9D3111EA501B400858ED2 /* AppDelegate.swift in Sources */,
 				86E9D3501EA5497F00858ED2 /* SingleItemViewComponent.swift in Sources */,
 				86E9D3541EA56EE500858ED2 /* Extentions.swift in Sources */,
+				866EC44C1EA6967B00C12555 /* CacheService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

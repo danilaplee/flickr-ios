@@ -114,7 +114,8 @@ class NavComponent: UIViewController, UISearchBarDelegate {
         let text = search!.text!
         if(text == "" || prev_search == text) { return }
         prev_search = text;
-        app!.api!.searchFullText(text, 1)
+        app!.current_page = 1;
+        app!.searchFullText(text)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {

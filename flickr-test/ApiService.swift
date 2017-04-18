@@ -12,6 +12,7 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
+    public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
     var flickr_auth_token           = "";
@@ -19,7 +20,7 @@ class ApiService {
     let flickr_secret               = "36f8f9a077f5932a"
     let flickr_api_key              = "8f154e3591322b1e0e1f8a1294aa79c6"
     let flickr_api                  = "https://api.flickr.com/services/rest/?"
-    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&text=[text]&format=json&nojsoncallback=1"
+    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&text=[text]&format=json&nojsoncallback=1"
     let flickr_frob_params          = "api_key=[api_key]&method=flickr.auth.getFrob";
     let flickr_auth_params          = "api_key=[api_key]&frob=[frob]&method=flickr.auth.getToken";
     init(a:AppController) {
@@ -36,6 +37,8 @@ class ApiService {
             return "failed";
         }
     }
+    
+    
     func genFlickrSig(_ string:String) -> String {
          return "&api_sig="+(flickr_secret+string.replace("=", "").replace("&", "")).md5()
     }
@@ -106,14 +109,20 @@ class ApiService {
         return [];
     }
     
-    func searchFullText(_ string:String, _ page:Int) {
+    func searchFullText(_ string:String, _ page:Int, done:@escaping CompletionHandler) {
         print("searching for "+string)
         current_query = string;
         app!.displayLoading()
-        let flickr_data = searchFlickr(string: string, page: page)
-        let google_data = searchGoogle(string: string, page: page)
-        let data = flickr_data + google_data
-        print("total search result "+data.description)
-        app!.displaySearchResult(data)
+        let queue = DispatchQueue.global()
+        // submit a task to the queue for background execution
+        queue.async() {
+            let flickr_data = self.searchFlickr(string: string, page: page)
+            let google_data = self.searchGoogle(string: string, page: page)
+            let data = flickr_data + google_data
+            print("total search result "+data.description)
+            DispatchQueue.main.async() {
+                done(data)
+            };
+        };
     }
 }
