@@ -54,7 +54,7 @@ class AppController {
                 self.displaySearchResult(self.search_cache)
             })
         }
-        if(view?.col?.singleItem != nil) {
+        if(view?.col?.singleItem != nil && string != api!.current_query) {
             view?.col?.removeSingleItem({ (res) in
                 runSearch();
             })
