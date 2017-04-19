@@ -12,6 +12,7 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
+    var per_page      = 60;
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
@@ -20,7 +21,7 @@ class ApiService {
     let flickr_secret               = "36f8f9a077f5932a"
     let flickr_api_key              = "8f154e3591322b1e0e1f8a1294aa79c6"
     let flickr_api                  = "https://api.flickr.com/services/rest/?"
-    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&text=[text]&format=json&nojsoncallback=1"
+    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&per_page=[per_page]&text=[text]&format=json&nojsoncallback=1"
     let flickr_frob_params          = "api_key=[api_key]&method=flickr.auth.getFrob";
     let flickr_auth_params          = "api_key=[api_key]&frob=[frob]&method=flickr.auth.getToken";
     init(a:AppController) {
@@ -76,6 +77,7 @@ class ApiService {
             .replace("[text]", string)
             .replace("[page]", page.description)
             .replace("[api_key]", flickr_api_key)
+            .replace("[per_page]", per_page.description)
         
         let new_flickr_call = flickr_api+flickr_params
         let res             = syncHttpCall(url: new_flickr_call)
@@ -114,7 +116,6 @@ class ApiService {
         current_query = string;
         app!.displayLoading()
         let queue = DispatchQueue.global()
-        // submit a task to the queue for background execution
         queue.async() {
             let flickr_data = self.searchFlickr(string: string, page: page)
             let google_data = self.searchGoogle(string: string, page: page)

@@ -49,9 +49,11 @@ class CacheService {
     
     func cacheCollection(images:[[String:Any]], done:@escaping CompletionHandler){
         let qu = app?.view?.col?.prev_query as! String;
-        DispatchQueue.main.async(execute: {
+        
+        let queue = DispatchQueue.global()
+        queue.async() {
             var is_done   = false;
-            var show_time = Int(Double(images.count)/self.app!.min_loaded_images)
+            var show_time = images.count as Int
             for(index, item) in images.enumerated() {
                 var i   = item
                 let url = item["url"]
@@ -59,7 +61,7 @@ class CacheService {
                 imageView.imageFromUrl(url as! String, onload: { (response) in
                     if(qu != self.app?.view?.col?.prev_query) { return }
                     if(response == "false" || response == "true"){
-                        show_time += (-1)
+                        show_time = show_time - 1
                         return;
                     }
                     let key = response.md5()
@@ -70,12 +72,14 @@ class CacheService {
                     if(self.images.count >= show_time && is_done == false) {
                         is_done = true;
                         print("collection cache done")
-                        done(self.images)
+                        DispatchQueue.main.async(execute: {
+                            done(self.images)
+                        });
                     }
                 });
                 
             }
-        });
+        }
     }
     
     func clearImageCache(){

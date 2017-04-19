@@ -30,6 +30,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var total_displayed = 0;
     var prev_query = ""
     var current_scroll:CGPoint?;
+    var is_reloading = false;
     
     
     init(v:UIViewController, a:AppController){
@@ -53,6 +54,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 print("reloading collection view!")
                 self.current_scroll = self.collectionView!.contentOffset
                 self.collectionView?.reloadData()
+                self.is_reloading = false;
             }
             else {
                 print("creating collection view!")
@@ -64,6 +66,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 self.view.isHidden = true;
                 self.view.addSubview(self.collectionView!)
                 self.collectionView?.reloadData()
+                self.is_reloading = false;
             }
             if(self.app.current_page != 1 && self.current_scroll != nil) {
                 self.collectionView?.contentOffset = self.current_scroll!
@@ -179,8 +182,8 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        total_displayed += 1;
-        if(indexPath.row == Int(Double(self.images.count)/1.1)) {
+        if(indexPath.row > self.images.count/2 && is_reloading == false) {
+            is_reloading = true;
             DispatchQueue.main.async(execute: {
                 self.app.current_page += 1
                 self.app.searchFullText(self.prev_query)

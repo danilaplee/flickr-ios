@@ -19,7 +19,7 @@ class AppController {
     var current_page = 0;
     
     //CONSTANTS
-    let min_loaded_images = 1.8;
+    let min_loaded_images = 1.0;
     let nav_height = 65;
     let welcome_text = "Welcome to Image Search";
     
@@ -38,11 +38,16 @@ class AppController {
     
     func searchFullText(_ string:String)
     {
+        let prev_size = search_cache.count
         api?.searchFullText(string, current_page, done: { (data) in
             if(self.current_page == 1) {
                 self.search_cache = data
             }
             else { self.search_cache += data }
+            if(self.search_cache.count == prev_size) {
+                self.view?.col?.loader?.hide()
+                return
+            }
             self.displaySearchResult(self.search_cache)
         })
     }
