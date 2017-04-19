@@ -23,6 +23,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var singleItem:SingleItemViewComponent?;
     
     //GENERAL PARAMS;
+    let backgrounds_color = UIColor(red: 250, green: 254, blue: 253)
     var single_item_index = 0;
     var nav_height = 0;
     var images:[[String:Any]] = []
@@ -42,7 +43,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         nav_height = a.nav_height;
         
         super.init(nibName: nil, bundle: nil)
-        view.frame = CGRect(x:0,y:nav_height-app.collection_inset_fix,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height)
+        view.frame = CGRect(x:0,y:nav_height-app.collection_inset_fix,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height+app.collection_inset_fix)
         loader = LoaderComponent(v:self, a:a)
         initCollectionView()
         view.addSubview(loader!.view)
@@ -157,6 +158,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         // Dispose of any resources that can be recreated.
     }
     func showLoader(_ query:String){
+        view.backgroundColor = backgrounds_color
         if(prev_query != query) {
             self.cache.images = [:]
             collectionView?.isHidden = true;
