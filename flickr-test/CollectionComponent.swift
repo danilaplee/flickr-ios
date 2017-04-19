@@ -82,16 +82,9 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     func incrementSingleItem(_ direction:Int){
         if(direction < 0) { inverted_direction = true; }
         let cache_count = cache.images.count
-//        print("trying increment")
-//        print("direction = "+direction.description)
-//        print("old index = "+single_item_index.description)
-//        print("cache_count = "+cache_count.description)
         var new_index = (single_item_index as Int) + direction
-//        print("after applying direction to current = "+new_index.description)
-        
         if(new_index > cache_count) { new_index = 0; }
         if(new_index < 0) { new_index = cache_count-1 }
-//        print("new index = "+new_index.description)
         var item = images[single_item_index]
         if(item == nil) {
             incrementSingleItem(direction + direction);
