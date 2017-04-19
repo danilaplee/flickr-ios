@@ -56,6 +56,12 @@ extension UIImageView
                 return;
             }
             URLSession.shared.dataTask(with: URL(string: urlString)!) { (data, response, error) in
+                if(error != nil || data == nil){
+                    print("error on load")
+                    print(error)
+                    onload("false")
+                    return;
+                }
                 do {
                     if(fileManager.fileExists(atPath: fileString.path))
                     {

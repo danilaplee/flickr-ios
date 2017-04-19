@@ -42,12 +42,10 @@ class LoaderComponent: UIViewController {
     }
     func show(){
         loader?.isHidden = false;
-//        view.isHidden = false;
     }
     func hide(){
         loader?.isHidden = true;
         welcome_text?.isHidden = true;
-//        view.isHidden = true;
     }
     
     init(v:UIViewController, a:AppController){
@@ -56,8 +54,6 @@ class LoaderComponent: UIViewController {
         super.init(nibName: nil, bundle: nil)
         screen_bounds = UIScreen.main.bounds
         calcViewFrames()
-//        view.frame = main_frame!;
-//        view.center = h1_frame_center!
         loader = UIActivityIndicatorView(frame: minimal_sqr)
         loader?.center = view.center
         loader?.activityIndicatorViewStyle = .gray
