@@ -24,7 +24,7 @@ class SingleItemViewComponent: UIViewController {
     
     //COMPONENT OPTIONS
     let image_compression = 0.9
-    let button_square     = 20;
+    let button_square     = 40;
     let button_offset     = 10;
     let title_height      = 60;
     let line_height       = 30;
@@ -65,15 +65,15 @@ class SingleItemViewComponent: UIViewController {
                 
                 case UISwipeGestureRecognizerDirection.right:
                     
-                    print("Swiped right")
-                    self.nextImage()
+//                    print("Swiped right")
+                    self.prevImage()
                     
                 break;
                     
                 case UISwipeGestureRecognizerDirection.left:
                     
-                    print("Swiped left")
-                    self.prevImage()
+//                    print("Swiped left")
+                    self.nextImage()
                     
                 break;
                 
@@ -181,8 +181,8 @@ class SingleItemViewComponent: UIViewController {
         view.bringSubview(toFront: image_title!)
         view.bringSubview(toFront: exitButton!)
         
-        print("INITIALIAZED SINGLE VIEW CONTROLLER")
-        print(exitButton)
+//        print("INITIALIAZED SINGLE VIEW CONTROLLER")
+//        print(exitButton)
     }
     
     required init?(coder aDecoder: NSCoder) {
