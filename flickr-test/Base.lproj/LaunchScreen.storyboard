@@ -22,13 +22,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="petacat.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-8f-hFS">
+                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="petacat.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-8f-hFS">
                                 <rect key="frame" x="57" y="78" width="206" height="346"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="346" id="oda-4L-kRQ"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlh-gZ-16G">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.62" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlh-gZ-16G">
                                 <rect key="frame" x="57" y="432" width="206" height="56"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="4UJ-Vb-hdP"/>
@@ -36,7 +36,7 @@
                                 <attributedString key="attributedText">
                                     <fragment content="PetaCat">
                                         <attributes>
-                                            <font key="NSFont" size="48" name="ChalkboardSE-Regular"/>
+                                            <font key="NSFont" size="48" name="ChalkboardSE-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
