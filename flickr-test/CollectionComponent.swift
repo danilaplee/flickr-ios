@@ -23,7 +23,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var singleItem:SingleItemViewComponent?;
     
     //GENERAL PARAMS;
-    
+    var single_item_index = 0;
     var nav_height = 0;
     var images:[[String:Any]] = []
     var imageCache:[String:Any] = [:]
@@ -32,6 +32,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var prev_query = ""
     var current_scroll:CGPoint?;
     var is_reloading = false;
+    var inverted_direction = false;
     
     
     init(v:UIViewController, a:AppController){
@@ -41,7 +42,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         nav_height = a.nav_height;
         
         super.init(nibName: nil, bundle: nil)
-        view.frame = CGRect(x:0,y:nav_height-29,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height)
+        view.frame = CGRect(x:0,y:nav_height-app.collection_inset_fix,width:Int(v.view.frame.width), height:Int(v.view.frame.height)-nav_height)
         loader = LoaderComponent(v:self, a:a)
         initCollectionView()
         view.addSubview(loader!.view)
@@ -78,12 +79,73 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
 //            self.view.bringSubview(toFront: self.loader!.view)
         });
     }
+    func incrementSingleItem(_ direction:Int){
+        if(direction < 0) { inverted_direction = true; }
+        let cache_count = cache.images.count
+//        print("trying increment")
+//        print("direction = "+direction.description)
+//        print("old index = "+single_item_index.description)
+//        print("cache_count = "+cache_count.description)
+        var new_index = (single_item_index as Int) + direction
+//        print("after applying direction to current = "+new_index.description)
+        
+        if(new_index > cache_count) { new_index = 0; }
+        if(new_index < 0) { new_index = cache_count-1 }
+//        print("new index = "+new_index.description)
+        var item = images[single_item_index]
+        if(item == nil) {
+            incrementSingleItem(direction + direction);
+            return;
+        }
+        single_item_index = new_index
+        openSingleItem();
+    }
     
-    func openSingleItem(_ item: [String:Any]) {
+    func openSingleItem() {
         let current = app.single_item_id
-        if(item["id"] == nil || current == item["id"] as! String) { return }
-        app.single_item_id = item["id"] as! String
+        var item:[String:Any]? = images[single_item_index]
+        if(item == nil) { return }
+        if(item!["id"] == nil || current == item!["id"] as! String) { return }
+        app.single_item_id = item!["id"] as! String
+        
+        if(singleItem != nil){
+            removeSingleItem({ (res) in
+                self.addSingleItem(item!)
+                self.inverted_direction = false;
+            })
+            return;
+        }
+        addSingleItem(item!)
+    }
+    
+    func addSingleItem(_ item:[String:Any]){
         singleItem = SingleItemViewComponent(v: self, a: app, data:item)
+        let old_x = singleItem!.view.center.x
+        var direction:CGFloat = 1.0
+        if(inverted_direction == true) { direction = -1.0}
+        singleItem!.view.center.x = old_x * 2.0 * direction
+        view.addSubview(singleItem!.view)
+        UIView.animate(withDuration: 0.15) {
+            self.singleItem!.view.center.x = old_x;
+        }
+    }
+    
+    func removeSingleItem(_ done:CompletionHandler?){
+        if(singleItem != nil) {
+            var direction:CGFloat = -1.0
+            if(inverted_direction == true) { direction = 1.0 }
+            UIView.animate(withDuration: 0.15, animations: {
+                self.singleItem!.view.center.x = self.singleItem!.view.center.x * 2.0 * direction
+                
+            }) { (d) in
+                self.singleItem!.view.removeFromSuperview();
+                self.singleItem = nil;
+                if(done != nil) { done!([:]) }
+                else {
+                    self.inverted_direction = false;
+                }
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -161,8 +223,6 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                         self.loader?.hide()
                 }
             });
-//            print("IMAGE FROM CACHE KEY")
-//            print(key)
             return cell;
         }
         cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
@@ -182,7 +242,6 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 DispatchQueue.main.async(execute: {
                     print("hiding preloader")
                     self.loader?.hide()
-//                    self.collectionView?.reloadData()
                 });
             }
         })
@@ -196,8 +255,9 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("did select #"+indexPath.row.description)
-        let data = images[indexPath.row]
-        self.openSingleItem(data);
+//        let data = images[indexPath.row]
+        single_item_index = indexPath.row
+        self.openSingleItem();
     }
     
 }

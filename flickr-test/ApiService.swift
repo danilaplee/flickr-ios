@@ -62,7 +62,7 @@ class ApiService {
     }
     
     func genFlickrImgUrl(photo:[String:Any]) -> String {
-        print(photo)
+//        print(photo)
         let farm    = (photo["farm"] as! Int).description
         let server  = photo["server"] as! String
         let id      = photo["id"] as! String

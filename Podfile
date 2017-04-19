@@ -7,6 +7,7 @@ target 'flickr-test' do
 
   pod 'SwiftyJSON'
   pod 'CryptoSwift'
+  pod 'Material', '~> 2.0'
   pod 'Alamofire',
     :git => 'https://github.com/Alamofire/Alamofire.git',
     :branch => 'master'

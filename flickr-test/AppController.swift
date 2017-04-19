@@ -20,6 +20,7 @@ class AppController {
     var current_page = 0;
     
     //CONSTANTS
+    let collection_inset_fix = 29;
     let min_loaded_images = 1.0;
     let nav_height = 65;
     let welcome_text = "Welcome to Image Search";
