@@ -13,11 +13,17 @@ class SingleItemViewComponent: UIViewController {
     
     var app:AppController;
     var mainView:UIViewController;
+    var info:[String:Any] = [:]
     
-    init(v:UIViewController, a:AppController){
+    //VIEWS
+    
+    
+    init(v:UIViewController, a:AppController, data:[String:Any]){
         app = a;
         mainView = v;
+        info = data;
         super.init(nibName: nil, bundle: nil)
+        
         print("INITIALIAZED SINGLE VIEW CONTROLLER")
     }
     

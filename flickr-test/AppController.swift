@@ -14,6 +14,7 @@ class AppController {
     var api:ApiService?
     var cache:CacheService?
     var history:[String] = [];
+    var single_item_id:String?
     var search_cache:[[String:Any]] = []
     var fileManager:FileManager?
     var current_page = 0;
@@ -50,6 +51,16 @@ class AppController {
             }
             self.displaySearchResult(self.search_cache)
         })
+    }
+    func incrementPage(){
+        DispatchQueue.main.async(execute: {
+            self.current_page += 1
+            self.searchFullText(self.api!.current_query)
+            let collection:CollectionComponent = self.view!.col!
+            collection.loader?.show()
+            collection.loader?.view.isHidden = false;
+            collection.view.bringSubview(toFront: collection.loader!.view)
+        });
     }
     
     func displayLoading(){

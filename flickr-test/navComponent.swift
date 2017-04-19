@@ -24,7 +24,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     // CONSTANTS
     var frame_height = 65;
     let release_timer = 3.0;
-    let default_search_text = "Try Cats"
+    let default_search_text = "Try lolcats"
     let background_color = UIColor(red: 198, green: 198, blue: 203)
     
     //GENERAL PARAMS

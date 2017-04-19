@@ -68,7 +68,7 @@ class CacheService {
                     i["cache_key"] = key
                     self.app?.view?.col?.images[index] = i
                     self.images[key] = self.memorizeImage(key, response)
-                    print("CACHE STATUS: "+self.images.count.description+"/"+show_time.description)
+//                    print("CACHE STATUS: "+self.images.count.description+"/"+show_time.description)
                     if(self.images.count >= show_time && is_done == false) {
                         is_done = true;
                         print("collection cache done")

@@ -20,6 +20,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     
     var loader:LoaderComponent?;
     var collectionView:UICollectionView?;
+    var singleItem:SingleItemViewComponent?;
     
     //GENERAL PARAMS;
     
@@ -76,6 +77,13 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
             self.view.isHidden = false;
 //            self.view.bringSubview(toFront: self.loader!.view)
         });
+    }
+    
+    func openSingleItem(_ item: [String:Any]) {
+        let current = app.single_item_id
+        if(item["id"] == nil || current == item["id"] as! String) { return }
+        app.single_item_id = item["id"] as! String
+        singleItem = SingleItemViewComponent(v: self, a: app, data:item)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -153,8 +161,8 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                         self.loader?.hide()
                 }
             });
-            print("IMAGE FROM CACHE KEY")
-            print(key)
+//            print("IMAGE FROM CACHE KEY")
+//            print(key)
             return cell;
         }
         cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
@@ -167,7 +175,6 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
             let img = self.cache.memorizeImage(key, response)
 
             DispatchQueue.main.async(execute: {
-                print("IMAGE FROM FILE CHECK")
                 cell.imageView?.image = img
             });
                 
@@ -184,14 +191,13 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if(indexPath.row > self.images.count/2 && is_reloading == false) {
             is_reloading = true;
-            DispatchQueue.main.async(execute: {
-                self.app.current_page += 1
-                self.app.searchFullText(self.prev_query)
-                self.loader?.show()
-                self.loader?.view.isHidden = false;
-                self.view.bringSubview(toFront: self.loader!.view)
-            });
+            app.incrementPage();
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("did select #"+indexPath.row.description)
+        let data = images[indexPath.row]
+        self.openSingleItem(data);
     }
     
 }
