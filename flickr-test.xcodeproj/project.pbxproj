@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8645F38A1EA5B8EB0087B25A /* LoaderComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8645F3891EA5B8EB0087B25A /* LoaderComponent.swift */; };
+		8647CF811EA7E66E006A78CF /* petacat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8647CF801EA7E66E006A78CF /* petacat.jpg */; };
 		866EC44C1EA6967B00C12555 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866EC44B1EA6967B00C12555 /* CacheService.swift */; };
 		86E9D3111EA501B400858ED2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3101EA501B400858ED2 /* AppDelegate.swift */; };
 		86E9D3131EA501B400858ED2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E9D3121EA501B400858ED2 /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		8645F3851EA57C2D0087B25A /* flickr-testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flickr-testTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8645F3861EA57C2D0087B25A /* flickr-testUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "flickr-testUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8645F3891EA5B8EB0087B25A /* LoaderComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoaderComponent.swift; sourceTree = "<group>"; };
+		8647CF801EA7E66E006A78CF /* petacat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = petacat.jpg; sourceTree = "<group>"; };
 		866EC44B1EA6967B00C12555 /* CacheService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		86E9D3101EA501B400858ED2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86E9D3121EA501B400858ED2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		86E9D30F1EA501B400858ED2 /* flickr-test */ = {
 			isa = PBXGroup;
 			children = (
+				8647CF801EA7E66E006A78CF /* petacat.jpg */,
 				86E9D34E1EA5484300858ED2 /* Services */,
 				86E9D34D1EA5483600858ED2 /* Components */,
 				86E9D3101EA501B400858ED2 /* AppDelegate.swift */,
@@ -271,6 +274,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8647CF811EA7E66E006A78CF /* petacat.jpg in Resources */,
 				86E9D31E1EA501B400858ED2 /* LaunchScreen.storyboard in Resources */,
 				86E9D31B1EA501B400858ED2 /* Assets.xcassets in Resources */,
 				86E9D3161EA501B400858ED2 /* Main.storyboard in Resources */,
