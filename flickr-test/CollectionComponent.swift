@@ -132,7 +132,6 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     
     func removeSingleItem(_ done:CompletionHandler?){
         if(singleItem != nil) {
-            single_item_index = 0;
             var direction:CGFloat = -1.0
             if(inverted_direction == true) { direction = 1.0 }
             UIView.animate(withDuration: 0.15, animations: {
@@ -143,6 +142,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 self.singleItem = nil;
                 if(done != nil) { done!([:]) }
                 else {
+                    self.single_item_index  = 0;
                     self.inverted_direction = false;
                 }
             }
