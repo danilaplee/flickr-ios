@@ -34,7 +34,7 @@
                                     <constraint firstAttribute="height" constant="56" id="4UJ-Vb-hdP"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="PetaCat">
+                                    <fragment content="PetaCat_">
                                         <attributes>
                                             <font key="NSFont" size="48" name="ChalkboardSE-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
