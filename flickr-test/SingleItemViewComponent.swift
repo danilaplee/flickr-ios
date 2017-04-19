@@ -64,17 +64,11 @@ class SingleItemViewComponent: UIViewController {
             switch swipeGesture.direction {
                 
                 case UISwipeGestureRecognizerDirection.right:
-                    
-//                    print("Swiped right")
                     self.prevImage()
-                    
                 break;
                     
                 case UISwipeGestureRecognizerDirection.left:
-                    
-//                    print("Swiped left")
                     self.nextImage()
-                    
                 break;
                 
                 default:
@@ -151,9 +145,6 @@ class SingleItemViewComponent: UIViewController {
         image!.addGestureRecognizer(leftSwipe)
         image!.isUserInteractionEnabled = true;
         
-//        image?.addGestureRecognizer(UISwipeGestureRecognizer)
-//        image
-        
         
         //EXIT BUTTON
         exitButton = UIButton(frame: exitFrame!)
@@ -164,7 +155,6 @@ class SingleItemViewComponent: UIViewController {
         
         
         //TITLE
-        //        let gradient =
         let textFrame = CGRect(x:button_offset, y:button_offset, width:Int(titleFrame!.width)-button_offset*2, height:line_height)
         image_title = UILabel(frame: titleFrame!);
         image_title!.text = title_text;
@@ -180,9 +170,6 @@ class SingleItemViewComponent: UIViewController {
         view.addSubview(image_title!)
         view.bringSubview(toFront: image_title!)
         view.bringSubview(toFront: exitButton!)
-        
-//        print("INITIALIAZED SINGLE VIEW CONTROLLER")
-//        print(exitButton)
     }
     
     required init?(coder aDecoder: NSCoder) {

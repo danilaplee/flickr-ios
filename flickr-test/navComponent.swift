@@ -113,6 +113,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     func startSearch(){
         let text = search!.text!
         if(text == "" || prev_search == text) { return }
+        search?.showsCancelButton = true;
         prev_search = text;
         app!.current_page = 1;
         app!.searchFullText(text)
@@ -132,6 +133,14 @@ class NavComponent: UIViewController, UISearchBarDelegate {
             self.view.endEditing(true)
         })
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        print("cancel button clicked")
+        self.search?.text = ""
+        self.app?.cleanState()
+        search?.showsCancelButton = false;
+        dismissKeyboard()
+    }
+    
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
 //        DispatchQueue.main.async(execute: {

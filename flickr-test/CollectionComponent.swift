@@ -183,6 +183,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         self.images = data
         self.total_loaded = 0;
         self.total_displayed = 0;
+        self.view.isHidden = false;
         cacheCollection { (_) in
             print("EVERYTHING CACHED")
             print("TOTAL CACHED = "+self.cache.images.count.description)

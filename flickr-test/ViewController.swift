@@ -22,6 +22,17 @@ class ViewController: UIViewController {
         
     }
     
+    func hideCollection(){
+        UIView.animate(withDuration: 0.5, animations: {
+            self.col?.collectionView?.center.y = (self.col?.collectionView?.center.y)!*3
+        }) { (state) in
+            self.col?.collectionView?.removeFromSuperview()
+            self.col?.collectionView = nil;
+            self.col?.view.isHidden = true;
+            self.app?.clearImageCache()
+        }
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()

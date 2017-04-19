@@ -38,8 +38,20 @@ class AppController {
         cache?.initCacheDirectory()
     }
     
+    func cleanState() {
+        self.api?.current_query = ""
+        if(view?.col?.singleItem != nil) {
+            view?.col?.removeSingleItem({ (res) in
+                self.view?.hideCollection()
+            })
+            return;
+        }
+        if(view?.col?.collectionView != nil) { self.view?.hideCollection() }
+    }
+    
     func searchFullText(_ string:String)
     {
+        if(string == nil || string == "") { return }
         let prev_size = search_cache.count
         func runSearch(){
             api?.searchFullText(string, current_page, done: { (data) in

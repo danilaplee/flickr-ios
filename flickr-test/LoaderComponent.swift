@@ -73,8 +73,6 @@ class LoaderComponent: UIViewController {
         view.addSubview(loader!)
         view.addSubview(welcome_text!)
         loader?.isHidden = true;
-        
-        print("INITIALIAZED LOADER COMPONENT")
     }
     
     required init?(coder aDecoder: NSCoder) {

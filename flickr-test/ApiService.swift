@@ -12,7 +12,7 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
-    var per_page      = 60;
+    var per_page      = 30;
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
