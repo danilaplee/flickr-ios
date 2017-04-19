@@ -143,6 +143,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 if(done != nil) { done!([:]) }
                 else {
                     self.single_item_index  = 0;
+                    self.app.single_item_id = "";
                     self.inverted_direction = false;
                 }
             }
