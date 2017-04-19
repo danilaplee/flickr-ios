@@ -49,9 +49,6 @@ extension UIImageView
             let fileString  = imageDir.appendingPathComponent(fileName)
             if(fileManager.fileExists(atPath: fileString.path))
             {
-//                print("from cache")
-//                print(fileString.path)
-//                self.image = 
                 onload(fileString.path)
                 return;
             }
@@ -68,8 +65,6 @@ extension UIImageView
                         try fileManager.removeItem(atPath: fileString.path)
                     }
                     try fileManager.createFile(atPath: fileString.path, contents: data as! Data, attributes: [:])
-//                    print("from cache")
-//                    print(fileString.path)
                     onload(fileString.path)
                 }
                 catch(let error){
