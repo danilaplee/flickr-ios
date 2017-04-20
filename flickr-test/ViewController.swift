@@ -63,18 +63,18 @@ class ViewController: UIViewController, EasyTipViewDelegate {
             
     }
     
+    
     func easyTipViewDidDismiss(_ tipView: EasyTipView) {
         let txt = tipView.text
         print("dismissed tip view "+txt)
         if(is_hiding_tips == true) { return }
         if(txt[0] == "#") {
-            print("clicked search tag == "+txt)
             let query = txt.replace("#", "")
-            self.nav?.search?.text = query
-            self.nav?.startSearch()
-            self.tipViews.remove(at:self.tipViews.index(of: tipView)!)
-            if(tipViews.count == 1) {
-                dismissTips(done: { (s) in })
+            self.dismissTips(done: { (s) in })
+            DispatchQueue.main.async() {
+                print("clicked search tag == "+txt)
+                self.nav?.search?.text = query
+                self.nav?.startSearch()
             }
             return
         }
