@@ -11,8 +11,6 @@ import EasyTipView
 
 class ViewController: UIViewController, EasyTipViewDelegate {
     
-
-    
     //DEPENDENCY INJECTION
     var app:AppController?
     var nav:NavComponent?
@@ -24,10 +22,6 @@ class ViewController: UIViewController, EasyTipViewDelegate {
     public typealias CompletionHandler = (_ success:String) -> Void
     
     var screen_bounds:CGRect?
-    
-    func calcViewFrames(){
-        
-    }
     
     func dismissTips(done:@escaping CompletionHandler){
         print("removing tip views")
@@ -52,6 +46,7 @@ class ViewController: UIViewController, EasyTipViewDelegate {
         }
         
     }
+    
     func runNews(){
         print("creating news")
         dismissTips { (s) in
@@ -120,7 +115,6 @@ class ViewController: UIViewController, EasyTipViewDelegate {
         
         //INITIALIZE GENERAL PARAMS
         screen_bounds = UIScreen.main.bounds
-        calcViewFrames()
         
         //INITIALIZE PRELOADER FOR APP TRANSITIONS
         view.addSubview(nav!.view)
