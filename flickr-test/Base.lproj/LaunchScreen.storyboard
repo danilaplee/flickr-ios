@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="ipad9_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -19,23 +19,53 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PetaCat_" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vlh-gZ-16G">
-                                <rect key="frame" x="61" y="894" width="646" height="56"/>
+                                <rect key="frame" x="57.5" y="438" width="205" height="69"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="4UJ-Vb-hdP"/>
+                                    <constraint firstAttribute="height" constant="69" id="K5Q-fP-lo2"/>
+                                    <constraint firstAttribute="width" constant="205" id="uST-Hh-IUy"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="39"/>
                                 <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="K5Q-fP-lo2"/>
+                                        <exclude reference="uST-Hh-IUy"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="4UJ-Vb-hdP"/>
+                                        <include reference="K5Q-fP-lo2"/>
+                                        <include reference="uST-Hh-IUy"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="petacat.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="P0l-8f-hFS">
-                                <rect key="frame" x="189" y="339" width="390" height="346"/>
+                                <rect key="frame" x="38.5" y="97" width="243" height="305"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="305" id="f48-Xz-H3h"/>
                                     <constraint firstAttribute="height" constant="346" id="oda-4L-kRQ"/>
+                                    <constraint firstAttribute="width" constant="243" id="ttf-4a-p3n"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="f48-Xz-H3h"/>
+                                        <exclude reference="ttf-4a-p3n"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="f48-Xz-H3h"/>
+                                        <exclude reference="oda-4L-kRQ"/>
+                                        <include reference="ttf-4a-p3n"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.98039215686274506" green="0.99607843137254903" blue="0.99215686274509807" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -43,12 +73,38 @@
                             <constraint firstItem="Vlh-gZ-16G" firstAttribute="top" secondItem="P0l-8f-hFS" secondAttribute="bottom" constant="380" id="3K6-ZN-j7s">
                                 <variation key="heightClass=regular" constant="209"/>
                             </constraint>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Vlh-gZ-16G" secondAttribute="bottom" constant="61" id="HXw-Yh-qon"/>
+                            <constraint firstItem="Vlh-gZ-16G" firstAttribute="top" secondItem="P0l-8f-hFS" secondAttribute="bottom" constant="36" id="Hyt-R5-o79"/>
+                            <constraint firstItem="P0l-8f-hFS" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="YQ3-XH-AK0"/>
                             <constraint firstItem="Vlh-gZ-16G" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="41" id="cav-R2-Psj"/>
+                            <constraint firstItem="Vlh-gZ-16G" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hab-Kg-rPX"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Vlh-gZ-16G" secondAttribute="bottom" constant="74" id="lHv-Sr-jB8"/>
                             <constraint firstItem="Vlh-gZ-16G" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="lmb-mb-Qev"/>
                             <constraint firstItem="Vlh-gZ-16G" firstAttribute="leading" secondItem="P0l-8f-hFS" secondAttribute="leading" constant="-128" id="saJ-fj-JDS"/>
                             <constraint firstItem="Vlh-gZ-16G" firstAttribute="trailing" secondItem="P0l-8f-hFS" secondAttribute="trailing" constant="128" id="ved-cf-3MO"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="YQ3-XH-AK0"/>
+                                <exclude reference="Hyt-R5-o79"/>
+                                <exclude reference="hab-Kg-rPX"/>
+                                <exclude reference="HXw-Yh-qon"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="YQ3-XH-AK0"/>
+                                <exclude reference="3K6-ZN-j7s"/>
+                                <include reference="Hyt-R5-o79"/>
+                                <exclude reference="cav-R2-Psj"/>
+                                <include reference="hab-Kg-rPX"/>
+                                <exclude reference="lmb-mb-Qev"/>
+                                <exclude reference="saJ-fj-JDS"/>
+                                <exclude reference="ved-cf-3MO"/>
+                                <include reference="HXw-Yh-qon"/>
+                                <exclude reference="lHv-Sr-jB8"/>
+                            </mask>
+                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
