@@ -72,6 +72,10 @@ class ViewController: UIViewController, EasyTipViewDelegate {
             let query = txt.replace("#", "")
             self.nav?.search?.text = query
             self.nav?.startSearch()
+            self.tipViews.remove(at:self.tipViews.index(of: tipView)!)
+            if(tipViews.count == 1) {
+                dismissTips(done: { (s) in })
+            }
             return
         }
     }
