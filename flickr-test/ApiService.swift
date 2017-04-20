@@ -21,7 +21,7 @@ class ApiService {
     let flickr_secret               = "36f8f9a077f5932a"
     let flickr_api_key              = "8f154e3591322b1e0e1f8a1294aa79c6"
     let flickr_api                  = "https://api.flickr.com/services/rest/?"
-    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&per_page=[per_page]&text=[text]&format=json&nojsoncallback=1"
+    let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&per_page=[per_page]&text=[text]&format=json&nojsoncallback=1&safe_seach=1"
     let flickr_frob_params          = "api_key=[api_key]&method=flickr.auth.getFrob";
     let flickr_auth_params          = "api_key=[api_key]&frob=[frob]&method=flickr.auth.getToken";
     init(a:AppController) {

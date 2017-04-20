@@ -27,6 +27,9 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     let release_timer = 3.0;
     let default_search_text = "Welcome to PetaCat_"
     let background_color = UIColor(red: 198, green: 198, blue: 203)
+    let banned_search  = [
+        "porn", "erotic", "nude", "adult", "sex", "порно", "секс", "хуй", "член","анал", "bitch", "cock", "cum", "cunt", "ass", "gay", "pussy", "dick", "nipple", "intercourse", "fuck", "booty", "whore", "slut", "hooker", "prostitute","penis","vagina","infection","quim","fanny","sissy","frigging","busywork","ебля","ебаться","ебат","member","anal", "facials", "creampie","blowjob","cumshot","hentai","interracial","masturbation","milf","shemale","fetish","gangbang","lesbian","squirting","penetration"
+    ]
     
     //GENERAL PARAMS
     var screen_bounds:CGRect?
@@ -112,8 +115,15 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     //SEARCH
     
     func startSearch(){
-        let text = search!.text!
-        if(text == "" || prev_search == text) { return }
+        var text = search!.text!.lowercased()
+        for q in banned_search {
+            text = text.replace(q, "")
+        }
+        search?.text = text
+        if(text == "" || prev_search == text) {
+            dismissKeyboard()
+            return
+        }
         prev_search = text;
         app!.current_page = 1;
         app!.searchFullText(text)
