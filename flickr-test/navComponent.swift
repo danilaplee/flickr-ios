@@ -24,7 +24,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     // CONSTANTS
     var frame_height = 65;
     let release_timer = 3.0;
-    let default_search_text = "Try lolcats"
+    let default_search_text = "Welcome to PetaCat_"
     let background_color = UIColor(red: 198, green: 198, blue: 203)
     
     //GENERAL PARAMS
@@ -113,7 +113,6 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     func startSearch(){
         let text = search!.text!
         if(text == "" || prev_search == text) { return }
-        search?.showsCancelButton = true;
         prev_search = text;
         app!.current_page = 1;
         app!.searchFullText(text)
@@ -122,6 +121,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         dismissKeyboard()
         startSearch()
+        search?.showsCancelButton = false;
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -137,12 +137,12 @@ class NavComponent: UIViewController, UISearchBarDelegate {
         print("cancel button clicked")
         self.search?.text = ""
         self.app?.cleanState()
-        search?.showsCancelButton = false;
         dismissKeyboard()
     }
     
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        search?.showsCancelButton = true;
 //        DispatchQueue.main.async(execute: {
 //            self.release_service?.invalidate()
 //            self.release_service = Timer.scheduledTimer(timeInterval: self.release_timer, target: self, selector:#selector(self.startSearch), userInfo: nil, repeats: true)

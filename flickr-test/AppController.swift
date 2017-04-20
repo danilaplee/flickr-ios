@@ -39,7 +39,11 @@ class AppController {
     }
     
     func cleanState() {
-        self.api?.current_query = ""
+        api?.current_query = ""
+        current_page = 0;
+        search_cache = []
+        view?.col?.prev_query = ""
+        view?.nav?.prev_search = ""
         if(view?.col?.singleItem != nil) {
             view?.col?.removeSingleItem({ (res) in
                 self.view?.hideCollection()

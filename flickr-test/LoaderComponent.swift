@@ -14,6 +14,10 @@ class LoaderComponent: UIViewController {
     var app:AppController?
     var mainView:UIViewController?
     
+    //CONSTANTS
+    let font_family = "ChalkboardSE-Light"
+    let minimal_sqr = CGRect(x:0,y:0,width:30, height:30);
+    
     //BUILDING MAIN VIEW ITEMS
     var loader:UIActivityIndicatorView?
     var welcome_text:UILabel?
@@ -25,11 +29,10 @@ class LoaderComponent: UIViewController {
     var h1_frame:CGRect?;
     var h1_frame_center:CGPoint?;
     var main_frame:CGRect?
-    let minimal_sqr = CGRect(x:0,y:0,width:20, height:20);
     
     func calcViewFrames(){
         let h1_padding = 40;
-        h1_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:30)
+        h1_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:50)
         h1_frame_center = view.center;
         h1_frame_center!.y = h1_frame_center!.y + minimal_sqr.height*2
         main_frame = CGRect(x:0,y:0,width:Int(screen_bounds!.width)-h1_padding, height:100)
@@ -63,6 +66,10 @@ class LoaderComponent: UIViewController {
         welcome_text!.text = app!.welcome_text
         welcome_text!.isHidden = false;
         welcome_text!.textAlignment = .center
+        welcome_text!.font =  UIFont(name:font_family, size: 20.0)
+        welcome_text!.isOpaque = true;
+        welcome_text!.opacity = 0.6;
+        welcome_text?.adjustsFontSizeToFitWidth = true;
         
         //INJECTING VIEWS
         let component_view = v.view!

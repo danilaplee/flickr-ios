@@ -83,16 +83,19 @@ class CacheService {
     }
     
     func clearImageCache(){
-        do {
-            images = [:]
-            let documents   = try fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-            let imageDir    = documents.appendingPathComponent("images", isDirectory: true)
-            try fileManager.removeItem(at: imageDir)
-            try fileManager.createDirectory(atPath: imageDir.path, withIntermediateDirectories: false, attributes: [:])
-        }
-        catch(let error){
-            print("CACHE CLEARING ERROR")
-            print(error)
+        let queue = DispatchQueue.global()
+        queue.async() {
+            do {
+                self.images = [:]
+                let documents   = try self.fileManager.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                let imageDir    = documents.appendingPathComponent("images", isDirectory: true)
+                try self.fileManager.removeItem(at: imageDir)
+                try self.fileManager.createDirectory(atPath: imageDir.path, withIntermediateDirectories: false, attributes: [:])
+            }
+            catch(let error){
+                print("CACHE CLEARING ERROR")
+                print(error)
+            }
         }
     }
 }
