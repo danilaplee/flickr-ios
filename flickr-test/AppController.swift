@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class AppController {
     
@@ -20,6 +21,7 @@ class AppController {
     var current_page = 0;
     
     //CONSTANTS
+    let pink = UIColor(red:238,green:175,blue:202)
     let collection_inset_fix = 29;
     let min_loaded_images = 1.0;
     let nav_height = 65;
@@ -50,7 +52,7 @@ class AppController {
             })
             return;
         }
-        if(view?.col?.collectionView != nil) { self.view?.hideCollection() }
+        self.view?.hideCollection()
     }
     
     func searchFullText(_ string:String)

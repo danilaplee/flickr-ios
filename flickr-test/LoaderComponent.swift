@@ -15,7 +15,7 @@ class LoaderComponent: UIViewController {
     var mainView:UIViewController?
     
     //CONSTANTS
-    let font_family = "ChalkboardSE-Light"
+    let font_family = "Futura-Light"
     let minimal_sqr = CGRect(x:0,y:0,width:30, height:30);
     
     //BUILDING MAIN VIEW ITEMS
@@ -41,7 +41,6 @@ class LoaderComponent: UIViewController {
     func setText(_ text:String){
         welcome_text?.text = text;
         welcome_text?.isHidden = false;
-        
     }
     func show(){
         loader?.isHidden = false;

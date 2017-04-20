@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import EasyTipView
 
 class NavComponent: UIViewController, UISearchBarDelegate {
     
@@ -135,14 +136,16 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         print("cancel button clicked")
-        self.search?.text = ""
-        self.app?.cleanState()
         dismissKeyboard()
+        self.search!.text = ""
+        self.app!.cleanState()
     }
     
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        search?.showsCancelButton = true;
+        app?.view?.dismissTips(done: { (s) in
+            self.search?.showsCancelButton = true;
+        })
 //        DispatchQueue.main.async(execute: {
 //            self.release_service?.invalidate()
 //            self.release_service = Timer.scheduledTimer(timeInterval: self.release_timer, target: self, selector:#selector(self.startSearch), userInfo: nil, repeats: true)
