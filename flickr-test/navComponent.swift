@@ -28,7 +28,7 @@ class NavComponent: UIViewController, UISearchBarDelegate {
     let default_search_text = "Welcome to PetaCat_"
     let background_color = UIColor(red: 198, green: 198, blue: 203)
     let banned_search  = [
-        "porn", "erotic", "nude", "adult", "sex", "порно", "секс", "хуй", "член","анал", "bitch", "cock", "cum", "cunt", "ass", "gay", "pussy", "dick", "nipple", "intercourse", "fuck", "booty", "whore", "slut", "hooker", "prostitute","penis","vagina","infection","quim","fanny","sissy","frigging","busywork","ебля","ебаться","ебат","member","anal", "facials", "creampie","blowjob","cumshot","hentai","interracial","masturbation","milf","shemale","fetish","gangbang","lesbian","squirting","penetration"
+        "porn", "erotic", "nude", "adult", "sex", "порно", "секс", "хуй", "член","анал", "bitch", "cock", "cum", "cunt", "ass", "gay", "pussy", "dick", "nipple", "intercourse", "fuck", "booty", "whore", "slut", "hooker", "prostitute","penis","vagina","infection","quim","fanny","sissy","frigging","busywork","ебля","ебаться","ебат","member","anal", "facials","bdsm", "creampie","blowjob","cumshot","hentai","interracial","masturbation","milf","shemale","fetish","gangbang","lesbian","squirting","penetration","underwear","69","kamasutra","xxx","bondage","putana","drugs","violence","rated","naked","nudity","flesh","censored","boob","dildo","orgasm","incest","clit","deepthroat","lingerie","weed","chink","cruelty","homicide"
     ]
     
     //GENERAL PARAMS
