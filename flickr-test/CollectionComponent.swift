@@ -34,6 +34,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var current_scroll:CGPoint?;
     var is_reloading = false;
     var inverted_direction = false;
+    var displayed_first_image = false;
     
     
     init(v:UIViewController, a:AppController){
@@ -53,7 +54,10 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     func initCollectionView(){
         DispatchQueue.main.async(execute: {
             let layout = UICollectionViewFlowLayout()
+            var is_new = true;
             if(self.collectionView != nil){
+//                if(is_ne)
+                is_new = false;
                 print("reloading collection view!")
                 self.current_scroll = self.collectionView!.contentOffset
                 self.collectionView?.reloadData()
@@ -70,6 +74,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 self.view.addSubview(self.collectionView!)
                 self.collectionView?.reloadData()
                 self.is_reloading = false;
+                self.displayed_first_image = false;
             }
             if(self.app.current_page != 1 && self.current_scroll != nil) {
                 self.collectionView?.contentOffset = self.current_scroll!
@@ -77,6 +82,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
             self.loader?.hide()
             self.loader?.view.isHidden = true;
             self.view.isHidden = false;
+//            if(is_new == true) {
 //            self.view.bringSubview(toFront: self.loader!.view)
         });
     }
@@ -246,6 +252,11 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if(indexPath.row == 1 && singleItem == nil && displayed_first_image == false) {
+            displayed_first_image = true;
+            single_item_index = indexPath.row
+            self.openSingleItem();
+        }
         if(indexPath.row > self.images.count/2 && is_reloading == false) {
             is_reloading = true;
             app.incrementPage();
@@ -256,6 +267,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
 //        let data = images[indexPath.row]
         single_item_index = indexPath.row
         self.openSingleItem();
+        self.app.view?.nav?.dismissKeyboard()
     }
     
 }

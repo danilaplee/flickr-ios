@@ -24,7 +24,7 @@ class SingleItemViewComponent: UIViewController {
     
     //COMPONENT OPTIONS
     let image_compression = 0.9
-    let button_square     = 40;
+    let button_square     = 60;
     let button_offset     = 10;
     let title_height      = 60;
     let line_height       = 30;
@@ -33,6 +33,7 @@ class SingleItemViewComponent: UIViewController {
     //VIEWS
     var image:UIImageView?
     var image_title:UILabel?
+    var title_container:UIView?;
     var image_author:UILabel?
     var image_description:UILabel?
     var exitButton:UIButton?
@@ -49,6 +50,17 @@ class SingleItemViewComponent: UIViewController {
     
     func closeComponent(){
         (mainView as! CollectionComponent).removeSingleItem(nil)
+        dismissKeyboard()
+    }
+    
+    func hideComponent(){
+        
+        UIView.animate(withDuration: 0.15, animations: {
+            self.view.y = -1*self.view.y*3
+        }) { (s) in
+            self.view.isHidden = true;
+            self.app.view?.col?.removeSingleItem(nil)
+        }
     }
     
     func nextImage(){
@@ -65,10 +77,16 @@ class SingleItemViewComponent: UIViewController {
                 
                 case UISwipeGestureRecognizerDirection.right:
                     self.prevImage()
+                    self.dismissKeyboard()
                 break;
                     
                 case UISwipeGestureRecognizerDirection.left:
                     self.nextImage()
+                    self.dismissKeyboard()
+                    break;
+                case UISwipeGestureRecognizerDirection.up:
+                    self.hideComponent()
+                    self.dismissKeyboard()
                 break;
                 
                 default:
@@ -140,9 +158,12 @@ class SingleItemViewComponent: UIViewController {
             rightSwipe.direction = .right
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.imageSwipe))
             leftSwipe.direction = .left
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.imageSwipe))
+            upSwipe.direction = .up
         
         image!.addGestureRecognizer(rightSwipe)
         image!.addGestureRecognizer(leftSwipe)
+        image!.addGestureRecognizer(upSwipe)
         image!.isUserInteractionEnabled = true;
         
         
@@ -150,26 +171,39 @@ class SingleItemViewComponent: UIViewController {
         exitButton = UIButton(frame: exitFrame!)
         exitButton!.bounds = exitFrame!;
         exitButton!.setImage(Icon.close, for: .normal)
+        exitButton?.tintColor = app.pink
         exitButton!.isHidden = false;
         exitButton!.addTarget(self, action: #selector(self.closeComponent), for: .touchDown)
         
         
         //TITLE
-        let textFrame = CGRect(x:button_offset, y:button_offset, width:Int(titleFrame!.width)-button_offset*2, height:line_height)
+        let textFrame = CGRect(x:0, y:button_offset, width:Int(titleFrame!.width)-80, height:line_height)
         image_title = UILabel(frame: titleFrame!);
         image_title!.text = title_text;
+        image_title?.textAlignment = .left
         image_title!.bounds = textFrame
         image_title!.textRect(forBounds: textFrame, limitedToNumberOfLines: description_lines)
-        image_title?.backgroundColor = UIColor.white;
-        image_title?.opacity = 0.7;
+        image_title?.center.x += -25
+        title_container = PassThroughView(frame: titleFrame!)
+        title_container?.isHidden = false;
+        title_container?.bounds = titleFrame!
+        title_container?.backgroundColor = UIColor.white;
+        title_container?.opacity = 0.7;
+        title_container?.addSubview(image_title!)
         
         
         //INJECT VIEWS
         view.addSubview(image!)
         view.addSubview(exitButton!)
-        view.addSubview(image_title!)
-        view.bringSubview(toFront: image_title!)
+        view.addSubview(title_container!)
+        view.bringSubview(toFront: title_container!)
         view.bringSubview(toFront: exitButton!)
+        let touchDown = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
+        view.addGestureRecognizer(touchDown)
+    }
+    
+    func dismissKeyboard(){
+        self.app.view?.nav?.dismissKeyboard()
     }
     
     required init?(coder aDecoder: NSCoder) {
