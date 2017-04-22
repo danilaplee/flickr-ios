@@ -140,13 +140,15 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 self.singleItem!.view.center.x = self.singleItem!.view.center.x * 2.0 * direction
                 
             }) { (d) in
-                self.singleItem!.view.removeFromSuperview();
-                self.singleItem = nil;
-                if(done != nil) { done!([:]) }
-                else {
-                    self.single_item_index  = 0;
-                    self.app.single_item_id = "";
-                    self.inverted_direction = false;
+                if(self.singleItem != nil) {
+                    self.singleItem!.view.removeFromSuperview();
+                    self.singleItem = nil;
+                    if(done != nil) { done!([:]) }
+                    else {
+                        self.single_item_index  = 0;
+                        self.app.single_item_id = "";
+                        self.inverted_direction = false;
+                    }
                 }
             }
         }
