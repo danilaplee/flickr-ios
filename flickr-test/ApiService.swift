@@ -12,18 +12,26 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
-    var per_page      = 30;
+    var per_page      = 10;
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
     var flickr_auth_token           = "";
     var flickr_frob_token           = "";
-    let flickr_secret               = "36f8f9a077f5932a"
     let flickr_api_key              = "8f154e3591322b1e0e1f8a1294aa79c6"
     let flickr_api                  = "https://api.flickr.com/services/rest/?"
     let flickr_search_params          = "method=flickr.photos.search&api_key=[api_key]&page=[page]&per_page=[per_page]&text=[text]&format=json&nojsoncallback=1&safe_seach=1"
     let flickr_frob_params          = "api_key=[api_key]&method=flickr.auth.getFrob";
     let flickr_auth_params          = "api_key=[api_key]&frob=[frob]&method=flickr.auth.getToken";
+    
+    //INSTAGRAM PARAMS
+    var ig_auth_token = ""
+    let ig_client_id  = "bc892a6747be45549f0cce0662dc91ed"
+    let ig_api_url    = "https://api.instagram.com/v1/"
+    let ig_auth_url   = "https://www.instagram.com/oauth/authorize/"
+    let ig_auth_param = "?client_id=[client_id]&redirect_uri=http://localhost/&response_type=token&scope=public_content"
+    let ig_srch_tags  = "tags/search?q=cat&access_token=[auth_token]"
+    
     init(a:AppController) {
         app = a;
     }
@@ -39,30 +47,7 @@ class ApiService {
         }
     }
     
-    
-    func genFlickrSig(_ string:String) -> String {
-         return "&api_sig="+(flickr_secret+string.replace("=", "").replace("&", "")).md5()
-    }
-    func authFlicker(){
-        var frob_params  = flickr_frob_params.replace("[api_key]", flickr_api_key)
-            frob_params += genFlickrSig(frob_params)
-        let frob_link = flickr_api+frob_params
-        flickr_frob_token = syncHttpCall(url: frob_link)
-        if(flickr_frob_token == "failed") {
-            print("frob failed")
-            return
-        }
-        
-        flickr_frob_token = (flickr_frob_token.components(separatedBy: "<frob>")[1]).components(separatedBy: "</frob>")[0].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        
-        var auth_params  = flickr_auth_params.replace("[api_key]", flickr_api_key).replace("[frob]", flickr_frob_token)
-            auth_params += genFlickrSig(auth_params)
-        
-        flickr_auth_token = syncHttpCall(url: flickr_api+auth_params)
-    }
-    
     func genFlickrImgUrl(photo:[String:Any]) -> String {
-//        print(photo)
         let farm    = (photo["farm"] as! Int).description
         let server  = photo["server"] as! String
         let id      = photo["id"] as! String
@@ -107,7 +92,11 @@ class ApiService {
         return []
     }
     
-    func searchGoogle(string:String, page:Int) -> [[String:Any]]{
+    func findHotTags(done:@escaping CompletionHandler) {
+        
+    }
+    
+    func searchInstagram(string:String, page:Int) -> [[String:Any]]{
         return [];
     }
     
@@ -118,7 +107,7 @@ class ApiService {
         let queue = DispatchQueue.global()
         queue.async() {
             let flickr_data = self.searchFlickr(string: string, page: page)
-            let google_data = self.searchGoogle(string: string, page: page)
+            let google_data = self.searchInstagram(string: string, page: page)
             let data = flickr_data + google_data
             print("total search result "+data.description)
             DispatchQueue.main.async() {

@@ -252,7 +252,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if(indexPath.row == 1 && singleItem == nil && displayed_first_image == false) {
+        if(indexPath.row == 0 && singleItem == nil && displayed_first_image == false && collectionView.isHidden == false) {
             displayed_first_image = true;
             single_item_index = indexPath.row
             self.openSingleItem();
