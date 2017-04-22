@@ -12,7 +12,7 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
-    var per_page      = 10;
+    var per_page      = 25;
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
@@ -109,7 +109,7 @@ class ApiService {
             let flickr_data = self.searchFlickr(string: string, page: page)
             let google_data = self.searchInstagram(string: string, page: page)
             let data = flickr_data + google_data
-            print("total search result "+data.description)
+//            print("total search result "+data.description)
             DispatchQueue.main.async() {
                 done(data)
             };

@@ -27,6 +27,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     var single_item_index = 0;
     var nav_height = 0;
     var images:[[String:Any]] = []
+    var total_images:[[String:Any]] = []
     var imageCache:[String:Any] = [:]
     var total_loaded = 0;
     var total_displayed = 0;
@@ -88,12 +89,12 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     }
     func incrementSingleItem(_ direction:Int){
         if(direction < 0) { inverted_direction = true; }
-        let cache_count = cache.images.count
+        let cache_count = images.count
         var new_index = (single_item_index as Int) + direction
-        if(new_index > cache_count) { new_index = 0; }
+        if(new_index >= cache_count) { new_index = 0; }
         if(new_index < 0) { new_index = cache_count-1 }
-        var item = images[single_item_index]
-        if(item == nil) {
+        print("single item index = "+single_item_index.description)
+        if(images[single_item_index]["url"] == nil) {
             incrementSingleItem(direction + direction);
             return;
         }
@@ -103,10 +104,11 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
     
     func openSingleItem() {
         let current = app.single_item_id
+        print("new single item index = "+single_item_index.description)
         var item:[String:Any]? = images[single_item_index]
         if(item == nil) { return }
-        if(item!["id"] == nil || current == item!["id"] as! String) { return }
-        app.single_item_id = item!["id"] as! String
+        if(item?["id"] == nil || current == item?["id"] as! String) { return }
+        app.single_item_id = item?["id"] as! String
         
         if(singleItem != nil){
             removeSingleItem({ (res) in
@@ -177,28 +179,26 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         loader?.show()
         loader?.view.isHidden = false;
     }
-    func cacheCollection(done:@escaping CompletionHandler){
-        cache.cacheCollection(images: self.images) { (image_cache) in
-            done(image_cache)
-        }
-    }
     
     func displayCollection(_ data:[[String:Any]]){
         print("LOADING COLLECTION")
         print("TOTAL COUNT = "+data.count.description)
-        self.images = data
         self.total_loaded = 0;
         self.total_displayed = 0;
         self.view.isHidden = false;
-        cacheCollection { (_) in
+        let page = app.current_page
+        cache.cacheCollection(images: data) { (image_cache) in
             print("EVERYTHING CACHED")
             print("TOTAL CACHED = "+self.cache.images.count.description)
+            self.images = image_cache;
             if(self.app.current_page == 1) {
                 DispatchQueue.main.async(execute: {
                     print("removed collection view!")
                     self.collectionView?.removeFromSuperview()
                     self.collectionView = nil
+                    self.initCollectionView()
                 });
+                return
             }
             self.initCollectionView()
         }
@@ -223,32 +223,32 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 cell.imageView?.image = img
                 if(self.loader!.view.isHidden == false
                     && self.total_loaded == Int(Double(self.images.count)/self.app.min_loaded_images)) {
-                        print("hiding preloader")
+//                        print("hiding preloader")
                         self.loader?.hide()
                 }
             });
             return cell;
         }
-        cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
-            self.view.isHidden = false;
-            self.total_loaded += 1;
-            if(response == "false" || response == "true"){ return; }
-            
-            let key = response.md5()
-            let page = self.app.current_page
-            let img = self.cache.memorizeImage(key, response)
-
-            DispatchQueue.main.async(execute: {
-                cell.imageView?.image = img
-            });
-                
-            if(self.loader!.view.isHidden == false && self.total_loaded == Int(Double(self.images.count)/self.app.min_loaded_images)) {
-                DispatchQueue.main.async(execute: {
-                    print("hiding preloader")
-                    self.loader?.hide()
-                });
-            }
-        })
+//        cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
+//            self.view.isHidden = false;
+//            self.total_loaded += 1;
+//            if(response == "false" || response == "true"){ return; }
+//            
+//            let key = response.md5()
+//            let page = self.app.current_page
+//            let img = self.cache.memorizeImage(key, response)
+//
+//            DispatchQueue.main.async(execute: {
+//                cell.imageView?.image = img
+//            });
+//                
+//            if(self.loader!.view.isHidden == false && self.total_loaded == Int(Double(self.images.count)/self.app.min_loaded_images)) {
+//                DispatchQueue.main.async(execute: {
+//                    print("hiding preloader")
+//                    self.loader?.hide()
+//                });
+//            }
+//        })
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -257,7 +257,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
             single_item_index = indexPath.row
             self.openSingleItem();
         }
-        if(indexPath.row > self.images.count/2 && is_reloading == false) {
+        if(indexPath.row > self.cache.images.count/2 && is_reloading == false) {
             is_reloading = true;
             app.incrementPage();
         }

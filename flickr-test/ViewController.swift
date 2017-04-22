@@ -52,8 +52,7 @@ class ViewController: UIViewController, EasyTipViewDelegate {
         dismissTips { (s) in
             self.makeTip("Popular on PetaCat:")
             self.makeTip("#funny cats")
-            self.makeTip("#longcat")
-            self.makeTip("#Lolcats")
+            self.makeTip("#lolcats")
         }
             
     }
