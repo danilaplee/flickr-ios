@@ -15,8 +15,10 @@ class CacheService {
     var images:[String:Any] = [:]
     var total_faces = 0;
     var total_removed = 0;
+    let skip_barrier = 10;
     var harrasment_cache:[String:Any] = [:]
     var faces_cache:[String:Any] = [:]
+    let queue = DispatchQueue.global()
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     public typealias BoolHandler = (_ success:Bool) -> Void
     
@@ -56,11 +58,10 @@ class CacheService {
         let key = path.md5()
         if(faces_cache[key] != nil) { return done(faces_cache[key] as! Bool) }
         
-        let queue = DispatchQueue.global()
         queue.async() {
             do {
                 guard let data:Data         = NSData(contentsOfFile: path)! as Data                   else { return done(true) }
-                guard let compress:Data     = UIImageJPEGRepresentation(UIImage(data: data)!, 0.3)!   else { return done(true) }
+                guard let compress:Data     = UIImageJPEGRepresentation(UIImage(data: data)!, 0.1)!   else { return done(true) }
                 guard let img               = UIImage(data:compress)                                  else { return done(true); }
                 guard let faceImage         = CIImage(image:img)                                      else { return done(true); }
                 let accuracy                = [CIDetectorAccuracy:CIDetectorAccuracyHigh]
@@ -89,21 +90,25 @@ class CacheService {
         return false;
     }
     
-    func cacheCollection(images:[[String:Any]], done:@escaping CompletionHandler){
+    func cacheCollection(_ imgs:[[String:Any]], done:@escaping CompletionHandler){
         let qu = app?.view?.col?.prev_query as! String;
         let per_page = app?.api?.per_page as! Int
         let current_page = app?.current_page as! Int
-        let skip_barrier = 10
-        if(current_page == 1) { total_removed = 0; }
+        let skip_barrier = self.skip_barrier
+        if(current_page == 1) {
+            total_removed = 0;
+            harrasment_cache = [:]
+            faces_cache = [:]
+            images = [:]
+        }
         var new_img:[[String:Any]] = []
         self.total_faces = 0;
-        let queue = DispatchQueue.global()
         queue.async() {
             var is_done   = false;
-            let show_time = images.count as Int - 1
+            let show_time = imgs.count as Int - 1
             var removed   = 0;
             print("STARTING CACHE TOTAL IMAGES = "+show_time.description )
-            for(index, item) in images.enumerated() {
+            for(index, item) in imgs.enumerated() {
                 var i   = item
                 let url = item["url"]
                 let title:String = (item["title"] as! String).lowercased()
@@ -147,7 +152,7 @@ class CacheService {
                             self.total_removed += removed;
                             print("collection cache done")
                             print("total images/faces = "+new_img.count.description+"/"+self.total_faces.description)
-                            print("removed "+(images.count - new_img.count).description+" images")
+                            print("removed "+(imgs.count - new_img.count).description+" images")
                             DispatchQueue.main.async(execute: {
                                 done(new_img)
                             });
@@ -160,7 +165,6 @@ class CacheService {
     }
     
     func clearImageCache(){
-        let queue = DispatchQueue.global()
         queue.async() {
             do {
                 self.images = [:]

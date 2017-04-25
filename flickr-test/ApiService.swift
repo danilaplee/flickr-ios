@@ -12,7 +12,8 @@ import CryptoSwift
 class ApiService {
     var app:AppController?
     var current_query = "";
-    var per_page      = 25;
+    var per_page      = 22;
+    let queue         = DispatchQueue.global()
     public typealias CompletionHandler = (_ success:[[String:Any]]) -> Void
     
     //FLICKR PARAMS
@@ -104,7 +105,6 @@ class ApiService {
         print("searching for "+string)
         current_query = string;
         app!.displayLoading()
-        let queue = DispatchQueue.global()
         queue.async() {
             let flickr_data = self.searchFlickr(string: string, page: page)
             let google_data = self.searchInstagram(string: string, page: page)

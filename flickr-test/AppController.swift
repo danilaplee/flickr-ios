@@ -42,6 +42,8 @@ class AppController {
     
     func cleanState() {
         api?.current_query = ""
+        api?.queue.suspend()
+        cache?.queue.suspend()
         current_page = 0;
         search_cache = []
         view?.col?.prev_query = ""

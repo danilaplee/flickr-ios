@@ -52,41 +52,6 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         print("INITIALIAZED SINGLE VIEW CONTROLLER")
     }
     
-    func initCollectionView(){
-        DispatchQueue.main.async(execute: {
-            let layout = UICollectionViewFlowLayout()
-            var is_new = true;
-            if(self.collectionView != nil){
-//                if(is_ne)
-                is_new = false;
-                print("reloading collection view!")
-                self.current_scroll = self.collectionView!.contentOffset
-                self.collectionView?.reloadData()
-                self.is_reloading = false;
-            }
-            else {
-                print("creating collection view!")
-                self.collectionView = UICollectionView(frame:self.view.frame, collectionViewLayout: layout);
-                self.collectionView!.register(ImagePreview.self, forCellWithReuseIdentifier: "imgCell")
-                self.collectionView!.backgroundColor = UIColor.clear
-                self.collectionView!.delegate = self
-                self.collectionView!.dataSource = self
-                self.view.isHidden = true;
-                self.view.addSubview(self.collectionView!)
-                self.collectionView?.reloadData()
-                self.is_reloading = false;
-                self.displayed_first_image = false;
-            }
-            if(self.app.current_page != 1 && self.current_scroll != nil) {
-                self.collectionView?.contentOffset = self.current_scroll!
-            }
-            self.loader?.hide()
-            self.loader?.view.isHidden = true;
-            self.view.isHidden = false;
-//            if(is_new == true) {
-//            self.view.bringSubview(toFront: self.loader!.view)
-        });
-    }
     func incrementSingleItem(_ direction:Int){
         if(direction < 0) { inverted_direction = true; }
         let cache_count = images.count
@@ -171,6 +136,8 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         view.backgroundColor = backgrounds_color
         if(prev_query != query) {
             self.cache.images = [:]
+            self.collectionView?.removeFromSuperview()
+            self.collectionView = nil
             collectionView?.isHidden = true;
         }
         else {
@@ -189,22 +156,47 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         self.total_displayed = 0;
         self.view.isHidden = false;
         let page = app.current_page
-        cache.cacheCollection(images: data) { (image_cache) in
+        cache.cacheCollection(data) { (image_cache) in
             print("EVERYTHING CACHED")
             print("TOTAL CACHED = "+self.cache.images.count.description)
             self.images = image_cache;
-            if(self.app.current_page == 1) {
-                DispatchQueue.main.async(execute: {
-                    print("removed collection view!")
-                    self.collectionView?.removeFromSuperview()
-                    self.collectionView = nil
-                    self.initCollectionView()
-                });
-                return
-            }
             self.initCollectionView()
         }
     }
+    
+    func initCollectionView(){
+        DispatchQueue.main.async(execute: {
+            let layout = UICollectionViewFlowLayout()
+            var is_new = true;
+            if(self.collectionView != nil){
+                is_new = false;
+                print("reloading collection view!")
+                self.current_scroll = self.collectionView!.contentOffset
+                self.collectionView?.reloadData()
+            }
+            else {
+                print("creating collection view!")
+                self.collectionView = UICollectionView(frame:self.view.frame, collectionViewLayout: layout);
+                self.collectionView!.register(ImagePreview.self, forCellWithReuseIdentifier: "imgCell")
+                self.collectionView!.backgroundColor = UIColor.clear
+                self.collectionView!.delegate = self
+                self.collectionView!.dataSource = self
+                self.collectionView?.isHidden = false
+                self.view.isHidden = true;
+                self.view.addSubview(self.collectionView!)
+                self.collectionView?.reloadData()
+                self.displayed_first_image = false;
+            }
+            if(self.app.current_page != 1 && self.current_scroll != nil) {
+                self.collectionView?.contentOffset = self.current_scroll!
+            }
+            self.loader?.hide()
+            self.loader?.view.isHidden = true;
+            self.view.isHidden = false;
+            self.is_reloading = false;
+        });
+    }
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -217,7 +209,7 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
         let qu = prev_query
         var key = data["cache_key"]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imgCell", for: indexPath) as! ImagePreview
-        cell.awakeFromNib()
+        if(cell.imageView == nil) { cell.awakeFromNib() }
         if(key != nil) {
             self.total_loaded += 1;
             let img = self.cache.memorizeImage(key as! String, nil)
@@ -225,32 +217,11 @@ class CollectionComponent: UIViewController, UICollectionViewDelegate, UICollect
                 cell.imageView?.image = img
                 if(self.loader!.view.isHidden == false
                     && self.total_loaded == Int(Double(self.images.count)/self.app.min_loaded_images)) {
-//                        print("hiding preloader")
                         self.loader?.hide()
                 }
             });
             return cell;
         }
-//        cell.imageView?.imageFromUrl(url as! String, onload: { (response) in
-//            self.view.isHidden = false;
-//            self.total_loaded += 1;
-//            if(response == "false" || response == "true"){ return; }
-//            
-//            let key = response.md5()
-//            let page = self.app.current_page
-//            let img = self.cache.memorizeImage(key, response)
-//
-//            DispatchQueue.main.async(execute: {
-//                cell.imageView?.image = img
-//            });
-//                
-//            if(self.loader!.view.isHidden == false && self.total_loaded == Int(Double(self.images.count)/self.app.min_loaded_images)) {
-//                DispatchQueue.main.async(execute: {
-//                    print("hiding preloader")
-//                    self.loader?.hide()
-//                });
-//            }
-//        })
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
